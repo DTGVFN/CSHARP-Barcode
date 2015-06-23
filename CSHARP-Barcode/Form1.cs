@@ -18,8 +18,8 @@ namespace CSHARP_Barcode
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Barcode MyBarcode = new Barcode();
-            pictureBox1.Image =   MyBarcode.Create(200,100,textBox1.Text);
+            var MyBarcode = new Barcode();
+            pictureBox1.Image = MyBarcode.Create(500, 100, 15, textBox1.Text);
         }
     }
 }

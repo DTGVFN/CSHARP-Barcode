@@ -8,104 +8,88 @@ namespace CSHARP_Barcode
 {
     class Barcode
     {
-
-        
+        private readonly Dictionary<char, string> _code39Dictionary;
 
         public Barcode()
         {
-           
+            _code39Dictionary = new Dictionary<char, string>();
+            _code39Dictionary['0'] = "101001101101";
+            _code39Dictionary['1'] = "110100101011";
+            _code39Dictionary['2'] = "101100101011";
+            _code39Dictionary['3'] = "110110010101";
+            _code39Dictionary['4'] = "101001101011";
+            _code39Dictionary['5'] = "110100110101";
+            _code39Dictionary['6'] = "101100110101";
+            _code39Dictionary['7'] = "101001011011";
+            _code39Dictionary['8'] = "110100101101";
+            _code39Dictionary['9'] = "101100101101";
+            _code39Dictionary['A'] = "110101001011";
+            _code39Dictionary['B'] = "101101001011";
+            _code39Dictionary['C'] = "110110100101";
+            _code39Dictionary['D'] = "101011001011";
+            _code39Dictionary['E'] = "110101100101";
+            _code39Dictionary['F'] = "101101100101";
+            _code39Dictionary['G'] = "101010011011";
+            _code39Dictionary['H'] = "110101001101";
+            _code39Dictionary['I'] = "101101001101";
+            _code39Dictionary['J'] = "101011001101";
+            _code39Dictionary['K'] = "110101010011";
+            _code39Dictionary['L'] = "101101010011";
+            _code39Dictionary['M'] = "110110101001";
+            _code39Dictionary['N'] = "101011010011";
+            _code39Dictionary['O'] = "110101101001";
+            _code39Dictionary['P'] = "101101101001";
+            _code39Dictionary['Q'] = "101010110011";
+            _code39Dictionary['R'] = "110101011001";
+            _code39Dictionary['S'] = "101101011001";
+            _code39Dictionary['T'] = "101011011001";
+            _code39Dictionary['U'] = "110010101011";
+            _code39Dictionary['V'] = "100110101011";
+            _code39Dictionary['W'] = "110011010101";
+            _code39Dictionary['X'] = "100101101011";
+            _code39Dictionary['Y'] = "110010110101";
+            _code39Dictionary['Z'] = "100110110101";
+            _code39Dictionary['-'] = "100101011011";
+            _code39Dictionary['.'] = "110010101101";
+            _code39Dictionary[' '] = "100110101101";
+            _code39Dictionary['$'] = "100100100101";
+            _code39Dictionary['/'] = "100100101001";
+            _code39Dictionary['+'] = "100101001001";
+            _code39Dictionary['%'] = "101001001001";
+            _code39Dictionary['*'] = "100101101101";
         }
 
-
-
-        public  Bitmap Create(int height ,int width,string textconvert)
+        public Bitmap Create(int width, int height, int paddingLeft, string content)
         {
+            // Create bitmap canvas object with specified size
+            var canvas = new Bitmap(width, height);
+            // Create graphics to draw on
+            var graphics = Graphics.FromImage(canvas);
+            // Fill with background color
+            graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, width, height));
 
-
-            Bitmap MyCanvas = new Bitmap(height, width);  // Create Canvas Size wide 200 x 100 
-            Graphics MyPen = Graphics.FromImage(MyCanvas);// Use Mypen draw to MyCanvas
-            Rectangle MyArt = new Rectangle(0, 0, height, width); // Please see photo on Result.
-            MyPen.FillRectangle(Brushes.White, MyArt);
-
-            var DataCode39 = new Dictionary<string, string>();
-
-
-            DataCode39["0"] = "101001101101";
-            DataCode39["1"] = "110100101011";
-            DataCode39["2"] = "101100101011";
-            DataCode39["3"] = "110110010101";
-            DataCode39["4"] = "101001101011";
-            DataCode39["5"] = "110100110101";
-            DataCode39["6"] = "101100110101";
-            DataCode39["7"] = "101001011011";
-            DataCode39["8"] = "110100101101";
-            DataCode39["9"] = "101100101101";
-            DataCode39["A"] = "110101001011";
-            DataCode39["B"] = "101101001011";
-            DataCode39["C"] = "110110100101";
-            DataCode39["D"] = "101011001011";
-            DataCode39["E"] = "110101100101";
-            DataCode39["F"] = "101101100101";
-            DataCode39["G"] = "101010011011";
-            DataCode39["H"] = "110101001101";
-            DataCode39["I"] = "101101001101";
-            DataCode39["J"] = "101011001101";
-            DataCode39["K"] = "110101010011";
-            DataCode39["L"] = "101101010011";
-            DataCode39["M"] = "110110101001";
-            DataCode39["N"] = "101011010011";
-            DataCode39["O"] = "110101101001";
-            DataCode39["P"] = "101101101001";
-            DataCode39["Q"] = "101010110011";
-            DataCode39["R"] = "110101011001";
-            DataCode39["S"] = "101101011001";
-            DataCode39["T"] = "101011011001";
-            DataCode39["U"] = "110010101011";
-            DataCode39["V"] = "100110101011";
-            DataCode39["W"] = "110011010101";
-            DataCode39["X"] = "100101101011";
-            DataCode39["Y"] = "110010110101";
-            DataCode39["Z"] = "100110110101";
-            DataCode39["-"] = "100101011011";
-            DataCode39["."] = "110010101101";
-            DataCode39[" "] = "100110101101";
-            DataCode39["$"] = "100100100101";
-            DataCode39["/"] = "100100101001";
-            DataCode39["+"] = "100101001001";
-            DataCode39["%"] = "101001001001";
-            DataCode39["*"] = "100101101101";
-
-
-            string YourText = textconvert.ToUpper();
-            string MyEncode = null;
-
-            for (int x = 1; x <= YourText.Length; x++)
+            var encodedBits = new StringBuilder();
+            encodedBits.Append("1001011011010"); // Code39 prefix + 0 separator at the end
+            foreach (char c in content.ToUpper())
             {
-                string charx = YourText.Substring(x - 1, 1);
-
-                MyEncode = MyEncode + DataCode39[charx] + "0"; // 0 is Space bettewen char
+                string encoded;
+                if (!_code39Dictionary.TryGetValue(c, out encoded))
+                    throw new ArgumentOutOfRangeException("content", "Characher '" + c + "' is not compatible with this Code39 implementation!");
+                encodedBits.Append(encoded + '0');
             }
-            MyEncode = "100101101101" + "0" + MyEncode + "100101101101";
-            int CurserPoint = 0;
-            int Location = 15;
-            int xx = 1;
-            for (int position = 1; position <= MyEncode.Length; position++)
+            encodedBits.Append("100101101101");  // Code39 suffix
+
+            // We initially set the X coordinate to match the padding so that
+            // drawing begins from the padding
+            int offsetLeft = paddingLeft;
+            foreach (char c in encodedBits.ToString())
             {
-                string ch01 = MyEncode.Substring(position - 1, 1);
-                CurserPoint = Location + 1;
-                Rectangle Mybar = new Rectangle(Location, 0, 1, width);
-                if (ch01 == "0") MyPen.FillRectangle(Brushes.White, Mybar);
-                else MyPen.FillRectangle(Brushes.Black, Mybar);
-                xx++;
-                Location = CurserPoint;
+                var rectangle = new Rectangle(offsetLeft++, 0, 1, height);
+                graphics.FillRectangle(c == '0' ? Brushes.White : Brushes.Black, rectangle);
             }
-          //  MyCanvas.Save("d:\\c39\\YourBarcodeFinal.jpg");
-
-            return MyCanvas;
+            
+            return canvas;
         }
-
-
-
     }
 }
 
