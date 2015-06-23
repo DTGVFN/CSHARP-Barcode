@@ -12,6 +12,7 @@ How to Use :<br>
 Barcode MyBarcode = new Barcode();<br>
 pictureBox1.Image =   MyBarcode.Create(200,100,textBox1.Text);<br>
 This Project Return Bitmap.<br><br>
+<img class="C# Barcode Code39" src="http://dtgvfn.com/wp-content/uploads/2015/06/title2.png">
 
 You can Save To File Or Show on picturebox.<br>
 
