@@ -15,5 +15,11 @@ namespace CSHARP_Barcode
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Barcode MyBarcode = new Barcode();
+            pictureBox1.Image =   MyBarcode.Create(200,100,textBox1.Text);
+        }
     }
 }
