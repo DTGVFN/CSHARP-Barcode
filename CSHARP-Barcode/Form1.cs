@@ -20,6 +20,12 @@ namespace CSHARP_Barcode
         {
             var MyBarcode = new Barcode();
             pictureBox1.Image = MyBarcode.Create(500, 100, 15, textBox1.Text);
+            //pictureBox1.Image = MyBarcode.CreateCode128
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -61,12 +61,6 @@ namespace CSHARP_Barcode
 
         public Bitmap Create(int width, int height, int paddingLeft, string content)
         {
-            // Create bitmap canvas object with specified size
-            var canvas = new Bitmap(width, height);
-            // Create graphics to draw on
-            var graphics = Graphics.FromImage(canvas);
-            // Fill with background color
-            graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, width, height));
 
             var encodedBits = new StringBuilder();
             encodedBits.Append("1001011011010"); // Code39 prefix + 0 separator at the end
@@ -82,13 +76,43 @@ namespace CSHARP_Barcode
             // We initially set the X coordinate to match the padding so that
             // drawing begins from the padding
             int offsetLeft = paddingLeft;
+
+
+            //Set Width
+            width = encodedBits.Length + (offsetLeft * 2);
+
+            // Create bitmap canvas object with specified size
+            var canvas = new Bitmap(width, height);
+            // Create graphics to draw on
+            var graphics = Graphics.FromImage(canvas);
+            // Fill with background color
+            
+            graphics.FillRectangle(Brushes.White, new Rectangle(0, 0, width, height));
+
+
+            // Create Label Text Layer
+
+            var TextLayerSize = graphics.MeasureString(content, new Font("Tahoma", 8));
+            int TextLayerSizeHeight = (int)Math.Ceiling(TextLayerSize.Height);
+            int TextLayerSizeWidth = (int)Math.Ceiling(TextLayerSize.Width);
+            graphics.DrawString(content, new Font("Tahoma", 8), Brushes.Black, new RectangleF((width / 2) - (TextLayerSizeWidth / 2), height - TextLayerSizeHeight, TextLayerSizeWidth, TextLayerSizeHeight));
+            // End .
+
+
             foreach (char c in encodedBits.ToString())
             {
-                var rectangle = new Rectangle(offsetLeft++, 0, 1, height);
+                var rectangle = new Rectangle(offsetLeft++, 0, 1, height - TextLayerSizeHeight);
                 graphics.FillRectangle(c == '0' ? Brushes.White : Brushes.Black, rectangle);
             }
             
             return canvas;
+        }
+
+
+        public Bitmap CreateCode128()
+        {
+            Bitmap b = new Bitmap(100,100);
+            return b;
         }
     }
 }

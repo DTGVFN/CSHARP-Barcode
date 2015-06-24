@@ -5,3 +5,4 @@ D:\GitProject\CSHARP-Barcode\CSHARP-Barcode\obj\x86\Debug\CSHARP_Barcode.Propert
 D:\GitProject\CSHARP-Barcode\CSHARP-Barcode\obj\x86\Debug\CSHARP-Barcode.csproj.GenerateResource.Cache
 D:\GitProject\CSHARP-Barcode\CSHARP-Barcode\obj\x86\Debug\CSHARP-Barcode.exe
 D:\GitProject\CSHARP-Barcode\CSHARP-Barcode\obj\x86\Debug\CSHARP-Barcode.pdb
+D:\GitProject\CSHARP-Barcode\CSHARP-Barcode\obj\x86\Debug\CSHARP-Barcode.csprojResolveAssemblyReference.cache
