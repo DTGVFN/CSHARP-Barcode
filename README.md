@@ -17,6 +17,10 @@ This Project Return Bitmap.<br><br>
 You can Save To File Or Show on picturebox.<br>
 
 
+Q : How to Use For Project ?
+A : Copy File to Your Project Barcode.cs
+
+
 What is Code 39 And How to Decode Or Encode ?<br>
 <img alt="C# Barcode Code39" src="http://dtgvfn.com/wp-content/uploads/2015/06/sample1.png"><br><br>
 
