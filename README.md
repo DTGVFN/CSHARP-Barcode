@@ -1,11 +1,12 @@
 # CSHARP-Barcode
 <br>
 Hello Wellcome to My Project.<br>
-This Project Generetor image Barcode 
-This Project not Using Any Font.
+This Project Generetor image Barcode <br>
+This Project not Using Any Font.<br>
 
-This Project Use Bitmap + Graphic Funtion Only.
+This Project Use Bitmap + Graphic Funtion Only.<br>
 You Can Create Barcode Code39 Very Easy<br>
+For Next Format is Code128 will Update soon.
 <br>------------------------------------------------------------------------------<br>
 How to Use :<br>
 You can Save To File Or Show on picturebox.<br>
