@@ -19,7 +19,7 @@ This Project Return Bitmap.<br><br>
 
 
 Q : How to Use For Project ?<br>
-A : Copy File to Your Project Barcode.cs<br>
+A : Copy File Barcode.cs to Your Project<br>
 
 <br>------------------------------------------------------------------------------<br>
 
